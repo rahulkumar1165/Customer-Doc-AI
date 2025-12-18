@@ -1,0 +1,31 @@
+{
+  "name": "customs-doc-ai-filer",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "@google/genai": "^1.33.0",
+    "recharts": "^3.5.1",
+    "lucide-react": "^0.561.0",
+    "zustand": "^5.0.9",
+    "jspdf": "^3.0.4",
+    "jszip": "^3.10.1",
+    "@hookform/resolvers": "^5.2.2",
+    "react-hook-form": "^7.68.0",
+    "zod": "^4.1.13",
+    "xlsx": "0.18.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0"
+  }
+}
