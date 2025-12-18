@@ -2,20 +2,16 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { AIAnalysisResult, RiskLevel, Incoterm, ExportReason } from "../types";
 
 const API_KEY = process.env.API_KEY || ''; 
-const ai = new GoogleGenAI({ apiKey: API_KEY });
 
-// -- HELPER: ENRICH SHIPMENT DATA --
-// Takes minimal inputs and expands to full customs data
 export const enrichShipment = async (
     description: string,
     quantity: number,
-    totalValue: number, // Total value of shipment, not unit
+    totalValue: number,
     origin: string,
     destination: string,
     dutiesPaidBy: 'Seller' | 'Buyer'
 ) => {
     if (!API_KEY) {
-        // Mock fallback
         await new Promise(r => setTimeout(r, 1000));
         return {
             hsCode: "6205.20",
@@ -31,6 +27,7 @@ export const enrichShipment = async (
         };
     }
 
+    const ai = new GoogleGenAI({ apiKey: API_KEY });
     const prompt = `
     You are a Logistics AI. Enrich this shipment data for a customs invoice.
     
@@ -52,7 +49,7 @@ export const enrichShipment = async (
     `;
 
     const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
+        model: "gemini-3-flash-preview",
         contents: prompt,
         config: {
             responseMimeType: "application/json",
@@ -78,20 +75,19 @@ export const enrichShipment = async (
     return JSON.parse(response.text || "{}");
 };
 
-// -- HELPER: PARSE RAW ORDER TEXT --
 export const extractOrderData = async (rawText: string) => {
     if (!API_KEY) return null;
 
+    const ai = new GoogleGenAI({ apiKey: API_KEY });
     const prompt = `
     Extract shipment details from this raw order text.
     Text: "${rawText}"
     
     Return JSON with: consigneeName, consigneeAddress, productDescription, quantity, totalValue, currency.
-    If multiple items, just summarize the main one for this MVP.
     `;
 
     const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
+        model: "gemini-3-flash-preview",
         contents: prompt,
         config: {
             responseMimeType: "application/json",
@@ -113,25 +109,19 @@ export const extractOrderData = async (rawText: string) => {
     return JSON.parse(response.text || "{}");
 };
 
-// -- HELPER: VALIDATE SHIPMENT --
 export const validateShipment = async (shipmentData: any) => {
     if (!API_KEY) return { valid: true, warnings: [] };
 
+    const ai = new GoogleGenAI({ apiKey: API_KEY });
     const prompt = `
     Validate this customs invoice data for errors or anomalies.
     Data: ${JSON.stringify(shipmentData)}
-    
-    Check for:
-    - Mismatched weight vs quantity (e.g. 100 items weighing 0.1kg).
-    - Missing or malformed HS codes.
-    - Missing descriptions.
-    - Value discrepancies.
     
     Return JSON: { valid: boolean, warnings: string[] }
     `;
 
     const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
+        model: "gemini-3-flash-preview",
         contents: prompt,
         config: {
             responseMimeType: "application/json",
@@ -156,10 +146,6 @@ export const classifyShipment = async (
   destination: string,
   value: number
 ): Promise<AIAnalysisResult> => {
-    // Legacy function wrapper using enrich logic potentially, 
-    // but kept separate for specific detailed calls if needed.
-    // For MVP, we can reuse the logic from enrich or just keep independent.
-    // Simplifying to reuse existing logic for now.
     return {
         hsCode: "0000.00",
         dutyEstimate: "Pending",

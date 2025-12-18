@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStore } from '../store';
-import { PackagePlus, UploadCloud, FileSpreadsheet, Sparkles, CheckCircle, Download } from 'lucide-react';
+import { PackagePlus, UploadCloud, FileSpreadsheet, Sparkles, CheckCircle, Download, ArrowRight } from 'lucide-react';
 
 export const LandingPage: React.FC = () => {
   const { setView } = useStore();
@@ -52,38 +52,76 @@ export const LandingPage: React.FC = () => {
           </div>
       </div>
 
-      {/* 3 Steps Guide */}
-      <div className="bg-gray-50 py-16 border-t border-gray-200">
-          <div className="max-w-7xl mx-auto px-4 text-center">
-              <h2 className="text-3xl font-bold text-gray-900 mb-12">Generate Invoices in 3 Easy Steps</h2>
+      {/* Redesigned 3 Steps Guide */}
+      <div className="relative py-24 bg-slate-50 overflow-hidden border-y border-gray-200">
+          {/* Subtle Background Pattern */}
+          <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#2563eb 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
+          
+          <div className="max-w-7xl mx-auto px-4 relative z-10">
+              <div className="text-center mb-16">
+                  <span className="inline-block px-4 py-1.5 mb-4 text-xs font-bold tracking-widest text-blue-600 uppercase bg-blue-100 rounded-full">
+                      The Workflow
+                  </span>
+                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+                      Simplify Your Export Compliance
+                  </h2>
+                  <p className="mt-4 text-gray-500 max-w-xl mx-auto">
+                      Our intelligent engine handles the complexity of international trade so you don't have to.
+                  </p>
+              </div>
               
-              <div className="grid md:grid-cols-3 gap-12 relative">
-                  {/* Connector Line (Desktop) */}
-                  <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-0.5 bg-gray-200 -z-0"></div>
-
-                  <div className="relative z-10 bg-gray-50">
-                      <div className="w-24 h-24 bg-white border-4 border-blue-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
-                          <span className="text-2xl font-bold text-blue-600">1</span>
+              <div className="grid md:grid-cols-3 gap-8">
+                  {/* Step 1 */}
+                  <div className="group bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative overflow-hidden">
+                      <div className="absolute -right-4 -top-8 text-9xl font-black text-gray-50 select-none group-hover:text-blue-50 transition-colors">1</div>
+                      <div className="relative z-10">
+                          <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mb-8 shadow-lg shadow-blue-200 rotate-3 group-hover:rotate-0 transition-transform">
+                              <FileSpreadsheet className="text-white" size={28} />
+                          </div>
+                          <h3 className="text-xl font-bold text-gray-900 mb-3">Input Your Order</h3>
+                          <p className="text-gray-500 leading-relaxed">
+                              Paste a tracking link, upload an Excel file, or simply describe what you're selling. We support major e-commerce formats.
+                          </p>
                       </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">Enter Details</h3>
-                      <p className="text-gray-500 px-4">Type a description or upload a file. No need for complex codes yet.</p>
                   </div>
 
-                  <div className="relative z-10 bg-gray-50">
-                      <div className="w-24 h-24 bg-white border-4 border-purple-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
-                          <Sparkles className="text-purple-600" size={32} />
+                  {/* Step 2 */}
+                  <div className="group bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative overflow-hidden">
+                      <div className="absolute -right-4 -top-8 text-9xl font-black text-gray-50 select-none group-hover:text-purple-50 transition-colors">2</div>
+                      <div className="relative z-10">
+                          <div className="w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center mb-8 shadow-lg shadow-purple-200 -rotate-3 group-hover:rotate-0 transition-transform">
+                              <Sparkles className="text-white" size={28} />
+                          </div>
+                          <h3 className="text-xl font-bold text-gray-900 mb-3">AI Engine Analysis</h3>
+                          <p className="text-gray-500 leading-relaxed">
+                              Gemini AI analyzes your description to find the exact HS Code, calculates precise weights, and verifies trade compliance.
+                          </p>
                       </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">AI Enrichment</h3>
-                      <p className="text-gray-500 px-4">Our AI identifies the correct HS Code, estimates weight, and assigns Incoterms.</p>
                   </div>
 
-                  <div className="relative z-10 bg-gray-50">
-                      <div className="w-24 h-24 bg-white border-4 border-green-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
-                          <Download className="text-green-600" size={32} />
+                  {/* Step 3 */}
+                  <div className="group bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative overflow-hidden">
+                      <div className="absolute -right-4 -top-8 text-9xl font-black text-gray-50 select-none group-hover:text-green-50 transition-colors">3</div>
+                      <div className="relative z-10">
+                          <div className="w-16 h-16 bg-green-600 rounded-2xl flex items-center justify-center mb-8 shadow-lg shadow-green-200 rotate-6 group-hover:rotate-0 transition-transform">
+                              <Download className="text-white" size={28} />
+                          </div>
+                          <h3 className="text-xl font-bold text-gray-900 mb-3">Instant Docs</h3>
+                          <p className="text-gray-500 leading-relaxed">
+                              Download professionally formatted, customs-ready PDFs. Print them out or attach them to your digital shipping labels instantly.
+                          </p>
                       </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">Download PDF</h3>
-                      <p className="text-gray-500 px-4">Get a perfectly formatted Commercial Invoice ready for printing.</p>
                   </div>
+              </div>
+
+              <div className="mt-16 text-center">
+                  <button 
+                    onClick={() => setView('NEW_SHIPMENT')}
+                    className="inline-flex items-center px-8 py-4 bg-gray-900 text-white rounded-xl font-bold hover:bg-black transition-all shadow-lg hover:shadow-blue-100"
+                  >
+                      Try It Now for Free
+                      <ArrowRight className="ml-2" size={20} />
+                  </button>
               </div>
           </div>
       </div>
@@ -91,13 +129,13 @@ export const LandingPage: React.FC = () => {
       {/* Footer / CTA */}
       <div className="bg-white py-12 border-t border-gray-200">
           <div className="text-center">
-              <p className="text-gray-400 mb-4">Trusted by 1,000+ e-commerce sellers</p>
-              <div className="flex justify-center space-x-6 opacity-50 grayscale">
+              <p className="text-gray-400 mb-4 uppercase tracking-widest text-[10px] font-bold">Trusted by 1,000+ e-commerce sellers</p>
+              <div className="flex justify-center space-x-8 opacity-30 grayscale">
                  {/* Mock Logos */}
-                 <span className="text-xl font-bold text-gray-300">SHOPIFY</span>
-                 <span className="text-xl font-bold text-gray-300">AMAZON</span>
-                 <span className="text-xl font-bold text-gray-300">ETSY</span>
-                 <span className="text-xl font-bold text-gray-300">EBAY</span>
+                 <span className="text-xl font-black tracking-tighter text-gray-900 italic">SHOPIFY</span>
+                 <span className="text-xl font-black tracking-tighter text-gray-900 italic">AMAZON</span>
+                 <span className="text-xl font-black tracking-tighter text-gray-900 italic">ETSY</span>
+                 <span className="text-xl font-black tracking-tighter text-gray-900 italic">EBAY</span>
               </div>
           </div>
       </div>
