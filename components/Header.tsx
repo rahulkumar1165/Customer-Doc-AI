@@ -20,19 +20,18 @@ export const Header: React.FC = () => {
           </div>
 
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#" className="text-gray-500 hover:text-gray-900 font-medium">How it works</a>
+            <button 
+              onClick={() => setView('SUPPORT')}
+              className="text-gray-500 hover:text-gray-900 font-medium"
+            >
+              Support
+            </button>
             <a href="#" className="text-gray-500 hover:text-gray-900 font-medium">Pricing</a>
             <button 
                 onClick={() => setLoginModalOpen(true)}
-                className="text-blue-600 font-bold hover:bg-blue-50 px-4 py-2 rounded-lg transition-colors"
+                className="bg-blue-600 text-white px-5 py-2.5 rounded-lg font-bold hover:bg-blue-700 transition-all shadow-md hover:shadow-lg"
             >
                 Log In
-            </button>
-            <button 
-                onClick={() => setLoginModalOpen(true)}
-                className="bg-gray-900 text-white px-5 py-2.5 rounded-lg font-bold hover:bg-black transition-all shadow-md hover:shadow-lg"
-            >
-                Get Started
             </button>
           </nav>
 

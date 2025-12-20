@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStore } from '../store';
-import { PackagePlus, UploadCloud, FileSpreadsheet, Sparkles, CheckCircle, Download, ArrowRight } from 'lucide-react';
+import { PackagePlus, UploadCloud, FileSpreadsheet, Sparkles, CheckCircle, Download, ArrowRight, HelpCircle } from 'lucide-react';
 
 export const LandingPage: React.FC = () => {
   const { setView } = useStore();
@@ -8,7 +8,7 @@ export const LandingPage: React.FC = () => {
   return (
     <div className="animate-in fade-in duration-500">
       {/* Hero Section */}
-      <div className="bg-white pt-16 pb-20 lg:pt-24 lg:pb-28">
+      <div className="bg-white pt-16 pb-20 lg:pt-24 lg:pb-28 border-b border-gray-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
               <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl mb-6">
                   Customs Paperwork, <span className="text-blue-600">Automated by AI</span>
@@ -52,15 +52,14 @@ export const LandingPage: React.FC = () => {
           </div>
       </div>
 
-      {/* Redesigned 3 Steps Guide */}
-      <div className="relative py-24 bg-slate-50 overflow-hidden border-y border-gray-200">
-          {/* Subtle Background Pattern */}
+      {/* Guide / Workflow Section */}
+      <div className="relative py-24 bg-slate-50 overflow-hidden border-b border-gray-200">
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#2563eb 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
           
           <div className="max-w-7xl mx-auto px-4 relative z-10">
               <div className="text-center mb-16">
                   <span className="inline-block px-4 py-1.5 mb-4 text-xs font-bold tracking-widest text-blue-600 uppercase bg-blue-100 rounded-full">
-                      The Workflow
+                      Support Guide
                   </span>
                   <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
                       Simplify Your Export Compliance
@@ -113,25 +112,35 @@ export const LandingPage: React.FC = () => {
                       </div>
                   </div>
               </div>
+          </div>
+      </div>
 
-              <div className="mt-16 text-center">
-                  <button 
-                    onClick={() => setView('NEW_SHIPMENT')}
-                    className="inline-flex items-center px-8 py-4 bg-gray-900 text-white rounded-xl font-bold hover:bg-black transition-all shadow-lg hover:shadow-blue-100"
-                  >
-                      Try It Now for Free
-                      <ArrowRight className="ml-2" size={20} />
-                  </button>
+      {/* Contact Support Section */}
+      <div className="bg-white py-20 border-b border-gray-200">
+          <div className="max-w-4xl mx-auto px-4 text-center">
+              <div className="bg-gray-900 rounded-3xl p-8 md:p-12 text-center text-white relative overflow-hidden shadow-2xl">
+                  <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-64 h-64 bg-blue-600/20 rounded-full blur-3xl"></div>
+                  <div className="relative z-10">
+                      <h2 className="text-3xl font-bold mb-4">Need Personalized Support?</h2>
+                      <p className="text-gray-400 mb-10 max-w-lg mx-auto">Our support team is ready to help you with your customs filings and trade compliance questions.</p>
+                      
+                      <button 
+                        onClick={() => setView('SUPPORT')}
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-bold transition-all shadow-xl flex items-center mx-auto space-x-2"
+                      >
+                        <HelpCircle size={20} />
+                        <span>Visit Support Center</span>
+                      </button>
+                  </div>
               </div>
           </div>
       </div>
       
-      {/* Footer / CTA */}
-      <div className="bg-white py-12 border-t border-gray-200">
+      {/* Footer */}
+      <div className="bg-white py-12">
           <div className="text-center">
               <p className="text-gray-400 mb-4 uppercase tracking-widest text-[10px] font-bold">Trusted by 1,000+ e-commerce sellers</p>
               <div className="flex justify-center space-x-8 opacity-30 grayscale">
-                 {/* Mock Logos */}
                  <span className="text-xl font-black tracking-tighter text-gray-900 italic">SHOPIFY</span>
                  <span className="text-xl font-black tracking-tighter text-gray-900 italic">AMAZON</span>
                  <span className="text-xl font-black tracking-tighter text-gray-900 italic">ETSY</span>

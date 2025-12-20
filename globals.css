@@ -2,9 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: #f3f4f6;
+@layer base {
+  body {
+    @apply font-sans bg-gray-50 text-gray-900;
+  }
 }
 
 .animate-in {
@@ -19,4 +20,12 @@ body {
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+input, select, textarea {
+  @apply outline-none transition-all;
+}
+
+.btn-primary {
+  @apply bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700 transition-all shadow-md hover:shadow-lg disabled:opacity-50;
 }

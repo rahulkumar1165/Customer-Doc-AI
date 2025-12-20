@@ -5,6 +5,7 @@ import { NewShipmentForm } from './components/NewShipmentForm';
 import { ShipmentsList } from './components/ShipmentsList';
 import { BulkUpload } from './components/BulkUpload';
 import { Settings } from './components/Settings';
+import { SupportPage } from './components/SupportPage';
 import { LandingPage } from './components/LandingPage';
 import { LoginModal } from './components/LoginModal';
 import { useStore } from './store';
@@ -24,6 +25,7 @@ const App: React.FC = () => {
       case 'SHIPMENTS': return <ShipmentsList />;
       case 'BULK_IMPORT': return <BulkUpload />;
       case 'SETTINGS': return <Settings />;
+      case 'SUPPORT': return <SupportPage />;
       default: return <Dashboard />;
     }
   };

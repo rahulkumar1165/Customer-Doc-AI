@@ -1,13 +1,12 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { AIAnalysisResult, RiskLevel, Incoterm, ExportReason } from "../types";
 
-// Ambient declaration to satisfy TS for process.env.API_KEY in the Vite environment
-declare const process: {
-  env: {
-    API_KEY: string;
-  };
-};
+// Removed redundant local ambient process declaration as the global NodeJS namespace is augmented in vite-env.d.ts
 
+/**
+ * Enriches shipment data using Gemini AI.
+ * Uses 'gemini-3-flash-preview' for efficient data extraction and classification.
+ */
 export const enrichShipment = async (
     description: string,
     quantity: number,
@@ -16,7 +15,8 @@ export const enrichShipment = async (
     destination: string,
     dutiesPaidBy: 'Seller' | 'Buyer'
 ) => {
-    // Initializing Gemini API client with API key from environment variable as per guidelines
+    // Initializing Gemini API client with API key from environment variable as per guidelines.
+    // Creating the instance inside the function ensures the latest API key is used.
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const prompt = `
     You are a Logistics AI. Enrich this shipment data for a customs invoice.
@@ -66,8 +66,11 @@ export const enrichShipment = async (
     return JSON.parse(response.text || "{}");
 };
 
+/**
+ * Extracts order information from raw text snippets using Gemini AI.
+ */
 export const extractOrderData = async (rawText: string) => {
-    // Initializing Gemini API client with API key from environment variable
+    // Initializing Gemini API client inside the function to avoid stale closures.
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const prompt = `
     Extract shipment details from this raw order text.
@@ -96,12 +99,15 @@ export const extractOrderData = async (rawText: string) => {
         }
     });
 
-    // Directly access .text property from GenerateContentResponse
+    // Access the .text property directly.
     return JSON.parse(response.text || "{}");
 };
 
+/**
+ * Validates customs shipment data for potential compliance warnings.
+ */
 export const validateShipment = async (shipmentData: any) => {
-    // Initializing Gemini API client with API key from environment variable
+    // Initializing Gemini API client right before the API call.
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const prompt = `
     Validate this customs invoice data for errors or anomalies.
@@ -125,10 +131,14 @@ export const validateShipment = async (shipmentData: any) => {
         }
     });
 
-    // Directly access .text property from GenerateContentResponse
+    // Access the .text property directly.
     return JSON.parse(response.text || "{}");
 };
 
+/**
+ * Legacy classification placeholder. 
+ * Note: Classification is primarily handled during the enrichment phase.
+ */
 export const classifyShipment = async (
   _description: string,
   _material: string,

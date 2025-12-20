@@ -89,7 +89,7 @@ export interface ProductCatalogItem {
   intendedUse: string;
 }
 
-export type ViewState = 'DASHBOARD' | 'NEW_SHIPMENT' | 'SHIPMENTS' | 'SETTINGS' | 'BULK_IMPORT';
+export type ViewState = 'DASHBOARD' | 'NEW_SHIPMENT' | 'SHIPMENTS' | 'SETTINGS' | 'BULK_IMPORT' | 'SUPPORT';
 
 // -- BULK IMPORT TYPES --
 export type BulkImportStep = 'UPLOAD' | 'ENRICHING' | 'REVIEW' | 'GENERATING' | 'COMPLETE';

@@ -8,7 +8,8 @@ import {
   Package, 
   Settings, 
   LogOut, 
-  UploadCloud
+  UploadCloud,
+  HelpCircle
 } from 'lucide-react';
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -33,7 +34,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     return (
         <div className="min-h-screen bg-white">
             <Header />
-            <main className="bg-gray-50 min-h-[calc(100vh-64px)]">
+            <main className="bg-gray-50 min-h-[calc(100vh-64px)] overflow-y-auto">
                 {children}
             </main>
         </div>
@@ -57,6 +58,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
           <NavItem view="NEW_SHIPMENT" icon={PackagePlus} label="New Shipment" />
           <NavItem view="BULK_IMPORT" icon={UploadCloud} label="Bulk Import" />
           <NavItem view="SHIPMENTS" icon={Package} label="History" />
+          <NavItem view="SUPPORT" icon={HelpCircle} label="Support" />
           <NavItem view="SETTINGS" icon={Settings} label="Settings" />
         </nav>
 
@@ -97,7 +99,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         <nav className="md:hidden bg-white border-t border-gray-200 flex justify-around p-3 z-20">
            <button onClick={() => setView('DASHBOARD')} className={`p-2 rounded-lg ${currentView === 'DASHBOARD' ? 'text-blue-600 bg-blue-50' : 'text-gray-500'}`}><LayoutDashboard size={24} /></button>
            <button onClick={() => setView('NEW_SHIPMENT')} className={`p-2 rounded-lg ${currentView === 'NEW_SHIPMENT' ? 'text-blue-600 bg-blue-50' : 'text-gray-500'}`}><PackagePlus size={24} /></button>
-           <button onClick={() => setView('BULK_IMPORT')} className={`p-2 rounded-lg ${currentView === 'BULK_IMPORT' ? 'text-blue-600 bg-blue-50' : 'text-gray-500'}`}><UploadCloud size={24} /></button>
+           <button onClick={() => setView('SUPPORT')} className={`p-2 rounded-lg ${currentView === 'SUPPORT' ? 'text-blue-600 bg-blue-50' : 'text-gray-500'}`}><HelpCircle size={24} /></button>
            <button onClick={() => setView('SHIPMENTS')} className={`p-2 rounded-lg ${currentView === 'SHIPMENTS' ? 'text-blue-600 bg-blue-50' : 'text-gray-500'}`}><Package size={24} /></button>
         </nav>
       </main>
