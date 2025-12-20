@@ -1,7 +1,8 @@
 {
   "version": 2,
   "framework": null,
-  "outputDirectory": ".",
+  "buildCommand": "npm run build",
+  "outputDirectory": "build",
   "cleanUrls": true,
   "rewrites": [
     {
