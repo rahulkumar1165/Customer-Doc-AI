@@ -7,7 +7,7 @@ import { generateDocs } from '../utils/pdfGenerator';
 import { ShipmentStatus, ExportReason, Incoterm, BulkImportStep, BulkRow, BulkRowStatus } from '../types';
 import { 
   Upload, FileText, Check, Loader2, Play, AlertTriangle, FileUp, 
-  Search, Filter, Edit2, Download, ChevronRight, CheckCircle, AlertCircle, XCircle, ArrowLeft, Save, FileSpreadsheet
+  Search, Filter, Edit2, Download, ChevronRight, CheckCircle, AlertCircle, XCircle, ArrowLeft, FileSpreadsheet
 } from 'lucide-react';
 
 export const BulkUpload: React.FC = () => {
@@ -81,7 +81,8 @@ ORD-1003,Tech Corp,"88 Innovation Dr, Toronto",Bluetooth Speaker,50,25,China,Can
 
     try {
         // Use XLSX to parse the CSV text from the textarea robustly
-        const workbook = XLSX.read(text, { type: 'string', format: 'csv' });
+        // Removed 'format: csv' which doesn't exist in ParsingOptions
+        const workbook = XLSX.read(text, { type: 'string' });
         const sheetName = workbook.SheetNames[0];
         const sheet = workbook.Sheets[sheetName];
         
@@ -184,10 +185,10 @@ ORD-1003,Tech Corp,"88 Innovation Dr, Toronto",Bluetooth Speaker,50,25,China,Can
 
             // Update Progress
             if (i % 3 === 0 || i === processedRows.length - 1) {
-                setRows([...processedRows]); // Force re-render for progress updates visually if needed
+                setRows([...processedRows]); 
                 setProgress(Math.round(((i + 1) / processedRows.length) * 100));
             }
-            await new Promise(r => setTimeout(r, 200)); // Rate limit buffer
+            await new Promise(r => setTimeout(r, 200)); 
         }
         setStep('REVIEW');
       };
@@ -202,9 +203,9 @@ ORD-1003,Tech Corp,"88 Innovation Dr, Toronto",Bluetooth Speaker,50,25,China,Can
               return { 
                   ...r, 
                   enriched: { ...r.enriched, [field]: value },
-                  status: 'OK', // Reset status on manual fix
+                  status: 'OK', 
                   isUserConfirmed: true,
-                  messages: [] // Clear errors
+                  messages: [] 
               };
           }
           return r;
@@ -227,7 +228,6 @@ ORD-1003,Tech Corp,"88 Innovation Dr, Toronto",Bluetooth Speaker,50,25,China,Can
       
       const validRows = rows.filter(r => r.status !== 'ERROR');
       
-      // Use dummy user if not logged in
       const dummyUser = user || {
            id: 'temp', email: '', companyName: 'Your Company', address: 'Address', defaultOrigin: 'USA', subscriptionTier: 'FREE', shipmentsCount: 0
       };
@@ -236,7 +236,6 @@ ORD-1003,Tech Corp,"88 Innovation Dr, Toronto",Bluetooth Speaker,50,25,China,Can
           const row = validRows[i];
           if (!row.enriched) continue;
 
-          // Create finalized shipment object
           const shipmentData = {
               id: `bulk_${Date.now()}_${row.id}`,
               userId: user?.id || 'temp',
@@ -262,11 +261,9 @@ ORD-1003,Tech Corp,"88 Innovation Dr, Toronto",Bluetooth Speaker,50,25,China,Can
               validationWarnings: row.messages
           };
 
-          // Generate PDF
           const pdfUrl = generateDocs(shipmentData, dummyUser);
           row.pdfUrl = pdfUrl;
           
-          // Always add to store (persists for session)
           addShipment(shipmentData);
 
           setProgress(Math.round(((i + 1) / validRows.length) * 100));
@@ -321,9 +318,6 @@ ORD-1003,Tech Corp,"88 Innovation Dr, Toronto",Bluetooth Speaker,50,25,China,Can
       link.download = `enriched_data.csv`;
       link.click();
   };
-
-
-  // -- RENDER VIEWS --
 
   if (step === 'UPLOAD') {
       return (
@@ -443,7 +437,6 @@ ORD-1003,Tech Corp,"88 Innovation Dr, Toronto",Bluetooth Speaker,50,25,China,Can
       );
   }
 
-  // -- REVIEW SCREEN --
   return (
     <div className="flex flex-col h-[calc(100vh-120px)] animate-in fade-in py-4">
         <div className="flex justify-between items-end mb-6 shrink-0">
@@ -462,7 +455,6 @@ ORD-1003,Tech Corp,"88 Innovation Dr, Toronto",Bluetooth Speaker,50,25,China,Can
             </div>
         </div>
 
-        {/* Toolbar */}
         <div className="bg-white p-4 rounded-xl border border-gray-200 mb-4 shrink-0 flex justify-between items-center shadow-sm">
              <div className="flex space-x-2">
                  {(['ALL', 'OK', 'WARNING', 'ERROR'] as const).map(s => (
@@ -488,7 +480,6 @@ ORD-1003,Tech Corp,"88 Innovation Dr, Toronto",Bluetooth Speaker,50,25,China,Can
              </div>
         </div>
 
-        {/* Table Area */}
         <div className="flex-1 bg-white rounded-xl shadow-sm border border-gray-200 overflow-auto">
             <table className="w-full text-sm text-left relative">
                 <thead className="bg-gray-50 text-gray-500 uppercase text-xs font-semibold sticky top-0 z-10 shadow-sm">
@@ -512,7 +503,6 @@ ORD-1003,Tech Corp,"88 Innovation Dr, Toronto",Bluetooth Speaker,50,25,China,Can
                                 {row.original.origin} <span className="text-gray-300 px-1">&rarr;</span> {row.original.destination}
                             </td>
                             
-                            {/* Editable HS Code */}
                             <td className="px-6 py-4">
                                 {editingRowId === row.id ? (
                                     <input 

@@ -43,15 +43,6 @@ export const Settings: React.FC = () => {
                        <label className="block text-sm font-medium text-gray-700 mb-1">Tax ID / VAT / EORI</label>
                        <input type="text" defaultValue={user?.taxId} placeholder="e.g. GB123456789" className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none focus:border-blue-500" />
                    </div>
-
-                   <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Gemini API Key (Optional)</label>
-                        <div className="flex space-x-2">
-                             <input type="password" placeholder="sk-..." className="flex-1 px-3 py-2 border border-gray-300 rounded-lg outline-none focus:border-blue-500" />
-                             <button type="button" className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200">Update</button>
-                        </div>
-                        <p className="text-xs text-gray-500 mt-1">If not provided, the app uses a mocked AI response for demo purposes.</p>
-                   </div>
                </form>
            </div>
 

@@ -1,7 +1,12 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { AIAnalysisResult, RiskLevel, Incoterm, ExportReason } from "../types";
 
-const API_KEY = process.env.API_KEY || ''; 
+// Ambient declaration to satisfy TS for process.env.API_KEY in the Vite environment
+declare const process: {
+  env: {
+    API_KEY: string;
+  };
+};
 
 export const enrichShipment = async (
     description: string,
@@ -11,23 +16,8 @@ export const enrichShipment = async (
     destination: string,
     dutiesPaidBy: 'Seller' | 'Buyer'
 ) => {
-    if (!API_KEY) {
-        await new Promise(r => setTimeout(r, 1000));
-        return {
-            hsCode: "6205.20",
-            material: "Cotton",
-            intendedUse: "Retail Sale",
-            grossWeight: quantity * 0.5,
-            netWeight: quantity * 0.4,
-            incoterms: dutiesPaidBy === 'Seller' ? Incoterm.DDP : Incoterm.DAP,
-            unitPrice: totalValue / quantity,
-            reasonForExport: ExportReason.SALE,
-            riskLevel: RiskLevel.LOW,
-            reasoning: "Mock enrichment data."
-        };
-    }
-
-    const ai = new GoogleGenAI({ apiKey: API_KEY });
+    // Initializing Gemini API client with API key from environment variable as per guidelines
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const prompt = `
     You are a Logistics AI. Enrich this shipment data for a customs invoice.
     
@@ -72,13 +62,13 @@ export const enrichShipment = async (
         }
     });
 
+    // Directly access .text property from GenerateContentResponse
     return JSON.parse(response.text || "{}");
 };
 
 export const extractOrderData = async (rawText: string) => {
-    if (!API_KEY) return null;
-
-    const ai = new GoogleGenAI({ apiKey: API_KEY });
+    // Initializing Gemini API client with API key from environment variable
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const prompt = `
     Extract shipment details from this raw order text.
     Text: "${rawText}"
@@ -106,13 +96,13 @@ export const extractOrderData = async (rawText: string) => {
         }
     });
 
+    // Directly access .text property from GenerateContentResponse
     return JSON.parse(response.text || "{}");
 };
 
 export const validateShipment = async (shipmentData: any) => {
-    if (!API_KEY) return { valid: true, warnings: [] };
-
-    const ai = new GoogleGenAI({ apiKey: API_KEY });
+    // Initializing Gemini API client with API key from environment variable
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const prompt = `
     Validate this customs invoice data for errors or anomalies.
     Data: ${JSON.stringify(shipmentData)}
@@ -135,16 +125,17 @@ export const validateShipment = async (shipmentData: any) => {
         }
     });
 
+    // Directly access .text property from GenerateContentResponse
     return JSON.parse(response.text || "{}");
 };
 
 export const classifyShipment = async (
-  description: string,
-  material: string,
-  intendedUse: string,
-  origin: string,
-  destination: string,
-  value: number
+  _description: string,
+  _material: string,
+  _intendedUse: string,
+  _origin: string,
+  _destination: string,
+  _value: number
 ): Promise<AIAnalysisResult> => {
     return {
         hsCode: "0000.00",

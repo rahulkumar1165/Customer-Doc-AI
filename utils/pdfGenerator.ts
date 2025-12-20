@@ -1,7 +1,7 @@
 import { jsPDF } from 'jspdf';
 import { Shipment, UserProfile } from '../types';
 
-export const generateDocs = (shipment: Shipment, user: UserProfile) => {
+export const generateDocs = (shipment: Shipment, user: UserProfile): string => {
   const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.getWidth();
   
@@ -117,7 +117,7 @@ export const generateDocs = (shipment: Shipment, user: UserProfile) => {
   
   y += 12;
   
-  // Item 1 (MVP only supports 1 item entry per shipment currently, but visualized as list)
+  // Item 1
   const totalVal = shipment.unitPrice * shipment.quantity;
   
   doc.setFont('helvetica', 'bold');
@@ -126,14 +126,13 @@ export const generateDocs = (shipment: Shipment, user: UserProfile) => {
   
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8);
-  // Add material and use details which are critical for customs
   doc.text(`Material: ${shipment.material || 'N/A'}`, 25, y);
   y += 4;
   doc.text(`Use: ${shipment.intendedUse || 'N/A'}`, 25, y);
   
   // Columns for the item
   doc.setFontSize(9);
-  const rowY = y - 4; // Align with the middle of the description block
+  const rowY = y - 4; 
   doc.text(shipment.hsCode || '---', 95, rowY);
   doc.text(shipment.originCountry.substring(0, 3).toUpperCase(), 120, rowY);
   doc.text(shipment.quantity.toString(), 140, rowY);
@@ -149,7 +148,7 @@ export const generateDocs = (shipment: Shipment, user: UserProfile) => {
   doc.text(`${totalVal.toFixed(2)} ${shipment.currency}`, 190, y, { align: 'right' });
   
   // -- DECLARATION --
-  y = 240; // Force footer position
+  y = 240; 
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(9);
   
@@ -161,6 +160,6 @@ export const generateDocs = (shipment: Shipment, user: UserProfile) => {
   doc.text("Authorized Signature", 20, y + 5);
   doc.text(`${user.companyName}`, 20, y + 10);
   
-  // Return Blob
-  return doc.output('bloburl');
+  // Return the URL as a string
+  return doc.output('bloburl').toString();
 };
